@@ -1,0 +1,4 @@
+name = "SeisToolsPlot"
+uuid = "411446c4-4067-4154-bbcf-0edb57267dd0"
+authors = ["Chang Guo <changguo1998@gmail.com>"]
+version = "0.1.0"
