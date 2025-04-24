@@ -1,9 +1,34 @@
+export bb_line!, bb_map!, plot_fm!, plot_fm, plot_mt!, plot_mt
+
 setting_hide_axis = (xticksvisible = false, yticksvisible = false,
                      xticklabelsvisible = false, yticklabelsvisible = false,
                      xgridvisible = false, ygridvisible = false,
                      topspinevisible = false, bottomspinevisible = false,
                      leftspinevisible = false, rightspinevisible = false)
 
+"""
+```julia
+bb_line!(ax, mt, x0, y0, rx, ry; kwargs...)
+```
+
+- `ax`
+- `mt` `Union{SeisTools.Source.MomentTensor,SeisTools.Source.SDR}`
+- `x0` (default 0.0)
+- `y0` (default 0.0)
+- `rx` (default 1.0)
+- `ry` (default 1.0)
+
+=== Keyword Parameters ===
+
+- `proj` (default `:schmit`) `:schmit` or `:wulff`
+- `dtheta` (default 1.0 )
+- `planeline` (default `true`)
+- `planelinewidth` (default 1)
+- `planelinecolor` (default : `:black`)
+- `circleline` (default `true`)
+- `circlelinewidth` (default 4)
+- `circlelinecolor` (default `:black`)
+"""
 function bb_line!(ax, mt::Union{SeisTools.Source.MomentTensor,SeisTools.Source.SDR},
                   x0::Real = 0.0, y0::Real = 0.0, rx::Real = 1.0, ry::Real = 1.0;
                   proj::Symbol = :schmit, dtheta::Real = 1.0,
@@ -26,9 +51,28 @@ function bb_line!(ax, mt::Union{SeisTools.Source.MomentTensor,SeisTools.Source.S
     return ax
 end
 
+"""
+```julia
+bb_map!(ax, mt, x0, y0, rx, ry; kwargs...)
+```
+
+- `ax`
+- `mt` `Union{SeisTools.Source.MomentTensor,SeisTools.Source.SDR}`
+- `x0` (default 0.0)
+- `y0` (default 0.0)
+- `rx` (default 1.0)
+- `ry` (default 1.0)
+
+=== Keyword Parameters ===
+
+- `proj` (default `:schmit`) `:schmit` or `:wulff`
+- `resolution` (default 401)
+- `pcolor` (default `:white`)
+- `tcolor` (default `:black`)
+"""
 function bb_map!(ax, mt::Union{SeisTools.Source.MomentTensor,SeisTools.Source.SDR},
                  x0::Real = 0.0, y0::Real = 0.0, rx::Real = 1.0, ry::Real = 1.0;
-                 proj::Symbol = :schmit, resolution::Integer = 201, pcolor = :white, tcolor = :black)
+                 proj::Symbol = :schmit, resolution::Integer = 401, pcolor = :white, tcolor = :black)
     if proj == :schmit
         m = SeisTools.Source.beachball_bitmap_Schmit(mt; resolution = (resolution, resolution))
     else
@@ -40,6 +84,13 @@ function bb_map!(ax, mt::Union{SeisTools.Source.MomentTensor,SeisTools.Source.SD
     return ax
 end
 
+"""
+```julia
+plot_fm!(ax, strike, dip, rake, x0, y0, xr, yr; kwargs...)
+```
+
+see `plot_fm` for keyword argument docs
+"""
 function plot_fm!(ax, strike::Real, dip::Real, rake::Real,
                   x0::Real = 0.0, y0::Real = 0.0, rx::Real = 1.0, ry::Real = 1.0;
                   proj::Symbol = :schmit, dtheta::Real = 1.0,
@@ -54,6 +105,29 @@ function plot_fm!(ax, strike::Real, dip::Real, rake::Real,
     return ax
 end
 
+"""
+```julia
+plot_fm(strike, dip, rake; kwargs...)
+```
+
+- strike
+- dip
+- rake
+
+=== Keyword Parameters ===
+
+- `proj` (default `:schmit`) `:schmit` or `:wulff`
+- `dtheta` (default 1.0 )
+- `planeline` (default `true`)
+- `planelinewidth` (default 1)
+- `planelinecolor` (default : `:black`)
+- `circleline` (default `true`)
+- `circlelinewidth` (default 4)
+- `circlelinecolor` (default `:black`)
+- `resolution` (default 401)
+- `pcolor` (default `:white`)
+- `tcolor` (default `:black`)
+"""
 function plot_fm(strike::Real, dip::Real, rake::Real;
                  proj::Symbol = :schmit, dtheta::Real = 1.0,
                  planeline::Bool = true, planelinecolor = :black, planelinewidth = 1,
@@ -69,6 +143,13 @@ function plot_fm(strike::Real, dip::Real, rake::Real;
     return (fig, ax)
 end
 
+"""
+```julia
+plot_mt!(ax, m11, m22, m33, m12, m13, m23, x0, y0, xr, yr; kwargs...)
+```
+
+see `plot_mt` for keyword argument docs
+"""
 function plot_mt!(ax, m11::Real, m22::Real, m33::Real, m12::Real, m13::Real, m23::Real,
                   x0::Real = 0.0, y0::Real = 0.0, rx::Real = 1.0, ry::Real = 1.0;
                   proj::Symbol = :schmit, dtheta::Real = 1.0,
@@ -83,6 +164,29 @@ function plot_mt!(ax, m11::Real, m22::Real, m33::Real, m12::Real, m13::Real, m23
     return (fig, ax)
 end
 
+"""
+```julia
+plot_mt(m11, m22, m33, m12, m13, m23; kwargs...)
+```
+
+- strike
+- dip
+- rake
+
+=== Keyword Parameters ===
+
+- `proj` (default `:schmit`) `:schmit` or `:wulff`
+- `dtheta` (default 1.0 )
+- `planeline` (default `true`)
+- `planelinewidth` (default 1)
+- `planelinecolor` (default : `:black`)
+- `circleline` (default `true`)
+- `circlelinewidth` (default 4)
+- `circlelinecolor` (default `:black`)
+- `resolution` (default 401)
+- `pcolor` (default `:white`)
+- `tcolor` (default `:black`)
+"""
 function plot_mt(m11::Real, m22::Real, m33::Real, m12::Real, m13::Real, m23::Real;
                  proj::Symbol = :schmit, dtheta::Real = 1.0,
                  planeline::Bool = true, planelinecolor = :black, planelinewidth = 1,
